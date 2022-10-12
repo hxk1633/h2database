@@ -319,6 +319,11 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
      */
     static final int GROUP_COLLECTION = GROUP_OTHER + 1;
 
+    /**
+     * The value type for MATRIX values.
+     */
+    public static final int MATRIX = GROUP_COLLECTION + 1;
+
     static final byte GROUPS[] = {
             // NULL
             GROUP_NULL,
