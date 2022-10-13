@@ -29,6 +29,11 @@ public final class H2Type implements SQLType {
     public static final H2Type VARCHAR = new H2Type(TypeInfo.TYPE_VARCHAR, "CHARACTER VARYING");
 
     /**
+     * The EMOTICON data type.
+     */
+    public static final H2Type EMOTICON = new H2Type(TypeInfo.getTypeInfo(Value.EMOTICON), "EMOTICON");
+
+    /**
      * The CHARACTER LARGE OBJECT data type.
      */
     public static final H2Type CLOB = new H2Type(TypeInfo.TYPE_CLOB, "CHARACTER LARGE OBJECT");

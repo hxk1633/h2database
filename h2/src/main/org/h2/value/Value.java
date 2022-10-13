@@ -265,9 +265,14 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
     public static final int ROW = ARRAY + 1;
 
     /**
+     * The value type for EMOTICON values.
+     */
+    public static final int EMOTICON = ROW + 1;
+
+    /**
      * The number of value types.
      */
-    public static final int TYPE_COUNT = ROW + 1;
+    public static final int TYPE_COUNT = EMOTICON + 1;
 
     /**
      * Group for untyped NULL data type.
@@ -318,11 +323,6 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
      * Group for collection data types (ARRAY, ROW).
      */
     static final int GROUP_COLLECTION = GROUP_OTHER + 1;
-
-    /**
-     * The value type for EMOTICON values.
-     */
-    public static final int EMOTICON = GROUP_COLLECTION + 1;
 
     static final byte GROUPS[] = {
             // NULL

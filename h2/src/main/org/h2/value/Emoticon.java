@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 public class Emoticon implements Serializable {
     private String emoticon;
 
-    public Emoticon(String emoticon) throws NoSuchAlgorithmException {
+    public Emoticon(String emoticon) {
         if (emoticon.equals(":)")) {
             this.emoticon = emoticon.toString();
         } else if (emoticon.equals(":(")) {

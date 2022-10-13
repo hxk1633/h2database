@@ -85,6 +85,8 @@ public final class Transfer {
     private static final int BINARY = 30;
     private static final int DECFLOAT = 31;
 
+    private static final int EMOTICON = 32;
+
     private static final int[] VALUE_TO_TI = new int[Value.TYPE_COUNT + 1];
     private static final int[] TI_TO_VALUE = new int[45];
 
@@ -105,6 +107,7 @@ public final class Transfer {
         addType(VARBINARY, Value.VARBINARY);
         addType(VARCHAR, Value.VARCHAR);
         addType(VARCHAR_IGNORECASE, Value.VARCHAR_IGNORECASE);
+        addType(EMOTICON, Value.EMOTICON);
         addType(BLOB, Value.BLOB);
         addType(CLOB, Value.CLOB);
         addType(ARRAY, Value.ARRAY);
@@ -481,6 +484,7 @@ public final class Transfer {
             break;
         case Value.CHAR:
         case Value.VARCHAR:
+        case Value.EMOTICON:
         case Value.VARCHAR_IGNORECASE:
         case Value.BINARY:
         case Value.VARBINARY:
@@ -643,6 +647,7 @@ public final class Transfer {
             break;
         case Value.CHAR:
         case Value.VARCHAR:
+        case Value.EMOTICON:
         case Value.VARCHAR_IGNORECASE:
         case Value.BINARY:
         case Value.VARBINARY:
@@ -886,6 +891,9 @@ public final class Transfer {
             writeInt(VARCHAR);
             writeString(v.getString());
             break;
+        case Value.EMOTICON:
+            writeInt(EMOTICON);
+            writeString(v.getString());
         case Value.VARCHAR_IGNORECASE:
             writeInt(VARCHAR_IGNORECASE);
             writeString(v.getString());
@@ -1097,6 +1105,9 @@ public final class Transfer {
             }
         case VARCHAR:
             return ValueVarchar.get(readString());
+        case EMOTICON:
+            Emoticon emoticonObj = new Emoticon(readString());
+            return new ValueEmoticon(emoticonObj);
         case VARCHAR_IGNORECASE:
             return ValueVarcharIgnoreCase.get(readString());
         case CHAR:
