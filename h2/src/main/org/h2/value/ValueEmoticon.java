@@ -9,7 +9,7 @@ public class ValueEmoticon extends Value {
     protected Emoticon emoticon;
     private TypeInfo type;
 
-    public ValueEmoticon(String emoticon) throws NoSuchAlgorithmException{
+    public ValueEmoticon(String emoticon) {
         this.emoticon = new Emoticon(emoticon);
     }
 
@@ -17,7 +17,7 @@ public class ValueEmoticon extends Value {
         this.emoticon = emoticonValue;
     }
 
-    public static Value get(Emoticon emoticonObj)  throws NoSuchAlgorithmException {
+    public static Value get(Emoticon emoticonObj)  {
         ValueEmoticon value = new ValueEmoticon(emoticonObj);
         return value;
     }

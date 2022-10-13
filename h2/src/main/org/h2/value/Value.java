@@ -14,6 +14,7 @@ import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -1106,7 +1107,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
      * @param column the column (if any), used to improve the error message if conversion fails
      * @return the converted value
      */
-    private Value convertTo(TypeInfo targetType, CastDataProvider provider, int conversionMode, Object column) {
+    private Value convertTo(TypeInfo targetType, CastDataProvider provider, int conversionMode, Object column) throws NoSuchAlgorithmException {
         int valueType = getValueType(), targetValueType;
         if (valueType == NULL
                 || valueType == (targetValueType = targetType.getValueType()) && conversionMode == CONVERT_TO
@@ -1253,7 +1254,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         return ValueChar.get(s);
     }
 
-    private Value convertToVarchar(TypeInfo  , CastDataProvider provider, int conversionMode, Object column) {
+    private Value convertToVarchar(TypeInfo targetType, CastDataProvider provider, int conversionMode, Object column) {
         int valueType = getValueType();
         switch (valueType) {
         case BLOB:
@@ -1287,10 +1288,10 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
                 if (conversionMode != CAST_TO) {
                     throw getValueTooLongException(targetType, column);
                 }
-                return ValueEMOTICON.get(s.substring(0, p), provider);
+                return ValueEmoticon.get(new Emoticon(s.substring(0, p)));
             }
         }
-        return valueType == Value.EMOTICON ? this : ValueEMOTICON.get(getString(), provider);
+        return valueType == Value.EMOTICON ? this : ValueEmoticon.get(new Emoticon(getString()));
     }
 
     private ValueClob convertToClob(TypeInfo targetType, int conversionMode, Object column) {
