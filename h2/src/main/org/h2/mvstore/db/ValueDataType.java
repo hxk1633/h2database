@@ -383,13 +383,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
             break;
         }
         case Value.EMOTICON: {
-            String s = v.getString();
-            int len = s.length();
-            if (len < 32) {
-                buff.put((byte) (EMOTICON_0_31 + len)).putStringData(s, len);
-            } else {
-                writeString(buff.put(EMOTICON), s);
-            }
+            writeString(buff.put(EMOTICON), v.getString());
             break;
         }
         case Value.VARCHAR_IGNORECASE:
