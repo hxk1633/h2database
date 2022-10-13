@@ -1251,7 +1251,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         return ValueChar.get(s);
     }
 
-    private Value convertToVarchar(TypeInfo targetType, CastDataProvider provider, int conversionMode, Object column) {
+    private Value convertToVarchar(TypeInfo  , CastDataProvider provider, int conversionMode, Object column) {
         int valueType = getValueType();
         switch (valueType) {
         case BLOB:
@@ -1269,6 +1269,26 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             }
         }
         return valueType == Value.VARCHAR ? this : ValueVarchar.get(getString(), provider);
+    }
+
+    private Value convertToEMOTICON(TypeInfo  , CastDataProvider provider, int conversionMode, Object column) {
+        int valueType = getValueType();
+        switch (valueType) {
+        case BLOB:
+        case JAVA_OBJECT:
+            throw getDataConversionError(targetType.getValueType());
+        }
+        if (conversionMode != CONVERT_TO) {
+            String s = getString();
+            int p = MathUtils.convertLongToInt(targetType.getPrecision());
+            if (s.length() > p) {
+                if (conversionMode != CAST_TO) {
+                    throw getValueTooLongException(targetType, column);
+                }
+                return ValueEMOTICON.get(s.substring(0, p), provider);
+            }
+        }
+        return valueType == Value.EMOTICON ? this : ValueEMOTICON.get(getString(), provider);
     }
 
     private ValueClob convertToClob(TypeInfo targetType, int conversionMode, Object column) {
