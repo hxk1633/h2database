@@ -212,11 +212,6 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
      */
     public static final TypeInfo TYPE_ROW_EMPTY;
 
-    /**
-     * EMOTICON type
-     */
-    public static final TypeInfo TYPE_EMOTICON;
-
     private static final TypeInfo[] TYPE_INFOS_BY_VALUE_TYPE;
 
     private final int valueType;
@@ -238,7 +233,6 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         infos[Value.EMOTICON] = TYPE_EMOTICON = new TypeInfo(Value.EMOTICON);
         infos[Value.CLOB] = TYPE_CLOB = new TypeInfo(Value.CLOB);
         infos[Value.VARCHAR_IGNORECASE] = TYPE_VARCHAR_IGNORECASE = new TypeInfo(Value.VARCHAR_IGNORECASE);
-        infos[Value.EMOTICON] = TYPE_EMOTICON = new TypeInfo(Value.EMOTICON);
         // BINARY
         infos[Value.BINARY] = TYPE_BINARY = new TypeInfo(Value.BINARY, -1L);
         infos[Value.VARBINARY] = TYPE_VARBINARY = new TypeInfo(Value.VARBINARY);
@@ -327,7 +321,6 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         case Value.NULL:
         case Value.BOOLEAN:
         case Value.TINYINT:
-        case Value.EMOTICON:
         case Value.SMALLINT:
         case Value.INTEGER:
         case Value.BIGINT:

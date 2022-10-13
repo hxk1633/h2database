@@ -33,42 +33,7 @@ import org.h2.result.SortOrder;
 import org.h2.store.DataHandler;
 import org.h2.util.DateTimeUtils;
 import org.h2.util.Utils;
-import org.h2.value.CompareMode;
-import org.h2.value.ExtTypeInfoEnum;
-import org.h2.value.ExtTypeInfoRow;
-import org.h2.value.TypeInfo;
-import org.h2.value.Value;
-import org.h2.value.ValueArray;
-import org.h2.value.ValueBigint;
-import org.h2.value.ValueBinary;
-import org.h2.value.ValueBlob;
-import org.h2.value.ValueBoolean;
-import org.h2.value.ValueChar;
-import org.h2.value.ValueClob;
-import org.h2.value.ValueCollectionBase;
-import org.h2.value.ValueDate;
-import org.h2.value.ValueDecfloat;
-import org.h2.value.ValueDouble;
-import org.h2.value.ValueGeometry;
-import org.h2.value.ValueInteger;
-import org.h2.value.ValueInterval;
-import org.h2.value.ValueJavaObject;
-import org.h2.value.ValueJson;
-import org.h2.value.ValueNull;
-import org.h2.value.ValueNumeric;
-import org.h2.value.ValueReal;
-import org.h2.value.ValueRow;
-import org.h2.value.ValueSmallint;
-import org.h2.value.ValueTime;
-import org.h2.value.ValueTimeTimeZone;
-import org.h2.value.ValueTimestamp;
-import org.h2.value.ValueTimestampTimeZone;
-import org.h2.value.ValueTinyint;
-import org.h2.value.ValueUuid;
-import org.h2.value.ValueVarbinary;
-import org.h2.value.ValueVarchar;
-import org.h2.value.ValueEMOTICON;
-import org.h2.value.ValueVarcharIgnoreCase;
+import org.h2.value.*;
 import org.h2.value.lob.LobData;
 import org.h2.value.lob.LobDataDatabase;
 import org.h2.value.lob.LobDataInMemory;
@@ -103,6 +68,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
     private static final byte ENUM = 25;
     private static final byte INTERVAL = 26;
     private static final byte ROW = 27;
+    private static final byte EMOTICON = 28;
     private static final byte INT_0_15 = 32;
     private static final byte BIGINT_0_7 = 48;
     private static final byte NUMERIC_0_1 = 56;
@@ -115,7 +81,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
     private static final byte INT_NEG = 66;
     private static final byte BIGINT_NEG = 67;
     private static final byte VARCHAR_0_31 = 68;
-    private static final int EMOTICON = 32;
+    private static final byte EMOTICON_0_31 = 69;
     private static final int VARBINARY_0_31 = 100;
     // 132 was used for SPATIAL_KEY_2D
     // 133 was used for CUSTOM_DATA_TYPE
@@ -682,7 +648,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
         case VARCHAR_IGNORECASE:
             return ValueVarcharIgnoreCase.get(readString(buff));
         case EMOTICON:
-            return ValueEMOTICON.get(readString(buff));
+            return ValueEmoticon.get(new Emoticon(readString(buff)));
         case CHAR:
             return ValueChar.get(readString(buff));
         case ENUM: {
