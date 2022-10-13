@@ -137,12 +137,7 @@ public class DataType {
         add(Value.BOOLEAN, Types.BOOLEAN, createNumeric(ValueBoolean.PRECISION, 0), "BOOLEAN", "BIT", "BOOL");
         add(Value.TINYINT, Types.TINYINT, createNumeric(ValueTinyint.PRECISION, 0), "TINYINT");
         //add(Value.BIT_NUM, Types.BIT_NUM, createNumeric(ValueBIT_NUM.PRECISION, 0), "BIT_NUM");
-        dataType = new DataType();
-        dataType.prefix = "MATRIX[";
-        dataType.suffix = "][]";
-        dataType.params = "SIZE";
-        dataType.supportsPrecision = true;
-        add(Value.MATRIX, Types.MATRIX, dataType, "MATRIX");
+        add(Value.EMOTICON, Types.VARCHAR, createString(false, false), "EMOTICON");
         add(Value.SMALLINT, Types.SMALLINT, createNumeric(ValueSmallint.PRECISION, 0), "SMALLINT", "INT2");
         add(Value.INTEGER, Types.INTEGER, createNumeric(ValueInteger.PRECISION, 0),
                 "INTEGER", "INT", "MEDIUMINT", "INT4", "SIGNED"
@@ -478,8 +473,6 @@ public class DataType {
             return Value.TINYINT;
 //        case Types.BIT_NUM:
 //            return Value.BIT_NUM;
-        case Types.MATRIX:
-            return Value.MATRIX;
         case Types.BIGINT:
             return Value.BIGINT;
         case Types.REAL:
@@ -700,16 +693,6 @@ public class DataType {
 //    }
 
     /**
-     * Check if the given value type is a numeric type.
-     *
-     * @param type the value type
-     * @return true if the value type is a numeric type
-     */
-    public static boolean isNumericType(int type) {
-        return type >= Value.MATRIX && type <= Value.DECFLOAT;
-    }
-
-    /**
      * Check if the given value type is a binary string type.
      *
      * @param type the value type
@@ -736,7 +719,7 @@ public class DataType {
      * @return true if the value type is a String type
      */
     public static boolean isStringType(int type) {
-        return type == Value.VARCHAR || type == Value.CHAR || type == Value.VARCHAR_IGNORECASE;
+        return type == Value.VARCHAR || type == Value.CHAR || type == Value.VARCHAR_IGNORECASE || type == Value.EMOTICON;
     }
 
     /**

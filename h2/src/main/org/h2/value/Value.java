@@ -320,9 +320,9 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
     static final int GROUP_COLLECTION = GROUP_OTHER + 1;
 
     /**
-     * The value type for MATRIX values.
+     * The value type for EMOTICON values.
      */
-    public static final int MATRIX = GROUP_COLLECTION + 1;
+    public static final int EMOTICON = GROUP_COLLECTION + 1;
 
     static final byte GROUPS[] = {
             // NULL
@@ -371,7 +371,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             "INTERVAL DAY TO HOUR", "INTERVAL DAY TO MINUTE", "INTERVAL DAY TO SECOND", //
             "INTERVAL HOUR TO MINUTE", "INTERVAL HOUR TO SECOND", "INTERVAL MINUTE TO SECOND", //
             "JAVA_OBJECT", "ENUM", "GEOMETRY", "JSON", "UUID", //
-            "ARRAY", "ROW", //
+            "ARRAY", "ROW", "EMOTICON" //
     };
 
     /**

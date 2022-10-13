@@ -2254,6 +2254,8 @@ public class ErrorCode {
 
     // next is 90158
 
+    public static final int INVALID_EMOTICON_ERROR_CODE = 90158;
+
     private ErrorCode() {
         // utility class
     }
