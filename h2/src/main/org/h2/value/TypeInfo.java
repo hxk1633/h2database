@@ -43,6 +43,11 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
     public static final TypeInfo TYPE_VARCHAR;
 
     /**
+     * EMOTICON type with maximum parameters.
+     */
+    public static final TypeInfo TYPE_EMOTICON;
+
+    /**
      * VARCHAR_IGNORECASE type with maximum parameters.
      */
     public static final TypeInfo TYPE_VARCHAR_IGNORECASE;
@@ -230,6 +235,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         // CHARACTER
         infos[Value.CHAR] = TYPE_CHAR = new TypeInfo(Value.CHAR, -1L);
         infos[Value.VARCHAR] = TYPE_VARCHAR = new TypeInfo(Value.VARCHAR);
+        infos[Value.EMOTICON] = TYPE_EMOTICON = new TypeInfo(Value.EMOTICON);
         infos[Value.CLOB] = TYPE_CLOB = new TypeInfo(Value.CLOB);
         infos[Value.VARCHAR_IGNORECASE] = TYPE_VARCHAR_IGNORECASE = new TypeInfo(Value.VARCHAR_IGNORECASE);
         infos[Value.EMOTICON] = TYPE_EMOTICON = new TypeInfo(Value.EMOTICON);
@@ -338,6 +344,15 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
                 precision = Constants.MAX_STRING_LENGTH;
             }
             return new TypeInfo(Value.CHAR, precision);
+
+        case Value.EMOTICON:
+            if (precision < 1) {
+                return TYPE_EMOTICON;
+            }
+            if (precision > Constants.MAX_STRING_LENGTH) {
+                precision = Constants.MAX_STRING_LENGTH;
+            }
+            return new TypeInfo(Value.EMOTICON, precision);
         case Value.VARCHAR:
             if (precision < 1 || precision >= Constants.MAX_STRING_LENGTH) {
                 if (precision != 0) {
@@ -1023,6 +1038,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
             return precision >= 0L ? precision : 1L;
         case Value.VARCHAR:
         case Value.VARCHAR_IGNORECASE:
+        case Value.EMOTICON:
         case Value.VARBINARY:
         case Value.JAVA_OBJECT:
         case Value.ENUM:
@@ -1116,6 +1132,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         case Value.NULL:
         case Value.CHAR:
         case Value.VARCHAR:
+        case Value.EMOTICON:
         case Value.CLOB:
         case Value.VARCHAR_IGNORECASE:
         case Value.BINARY:
@@ -1189,6 +1206,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
             return ValueNull.DISPLAY_SIZE;
         case Value.CHAR:
             return precision >= 0 ? (int) precision : 1;
+        case Value.EMOTICON:
         case Value.VARCHAR:
         case Value.VARCHAR_IGNORECASE:
         case Value.JSON:
@@ -1279,6 +1297,7 @@ public class TypeInfo extends ExtTypeInfo implements Typed {
         switch (valueType) {
         case Value.CHAR:
         case Value.VARCHAR:
+        case Value.EMOTICON:
         case Value.CLOB:
         case Value.VARCHAR_IGNORECASE:
         case Value.BINARY:
