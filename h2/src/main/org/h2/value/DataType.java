@@ -137,7 +137,7 @@ public class DataType {
         add(Value.BOOLEAN, Types.BOOLEAN, createNumeric(ValueBoolean.PRECISION, 0), "BOOLEAN", "BIT", "BOOL");
         add(Value.TINYINT, Types.TINYINT, createNumeric(ValueTinyint.PRECISION, 0), "TINYINT");
         //add(Value.BIT_NUM, Types.BIT_NUM, createNumeric(ValueBIT_NUM.PRECISION, 0), "BIT_NUM");
-        add(Value.EMOTICON, Types.VARCHAR, createString(false, false), "EMOTICON");
+        add(Value.EMOTICON, Types.EMOTICON, createString(false, false), "EMOTICON");
         add(Value.SMALLINT, Types.SMALLINT, createNumeric(ValueSmallint.PRECISION, 0), "SMALLINT", "INT2");
         add(Value.INTEGER, Types.INTEGER, createNumeric(ValueInteger.PRECISION, 0),
                 "INTEGER", "INT", "MEDIUMINT", "INT4", "SIGNED"
