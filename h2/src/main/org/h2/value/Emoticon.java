@@ -1,18 +1,15 @@
 package org.h2.value;
-
 import org.h2.api.ErrorCode;
 import org.h2.message.DbException;
-
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 
 public class Emoticon implements Serializable {
     private String emoticon;
 
     public Emoticon(String emoticon) {
-        if (emoticon.equals(":)")) {
-            this.emoticon = emoticon.toString();
-        } else if (emoticon.equals(":(")) {
+        if (emoticon.equals(":)") || emoticon.equals(":(")) {
+            this.emoticon = emoticon;
+        } else {
             throw DbException.get(ErrorCode.INVALID_EMOTICON_ERROR_CODE);
         }
     }
