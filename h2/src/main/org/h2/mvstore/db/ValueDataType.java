@@ -67,6 +67,7 @@ import org.h2.value.ValueTinyint;
 import org.h2.value.ValueUuid;
 import org.h2.value.ValueVarbinary;
 import org.h2.value.ValueVarchar;
+import org.h2.value.ValueEMOTICON;
 import org.h2.value.ValueVarcharIgnoreCase;
 import org.h2.value.lob.LobData;
 import org.h2.value.lob.LobDataDatabase;
@@ -114,6 +115,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
     private static final byte INT_NEG = 66;
     private static final byte BIGINT_NEG = 67;
     private static final byte VARCHAR_0_31 = 68;
+    private static final int EMOTICON = 32;
     private static final int VARBINARY_0_31 = 100;
     // 132 was used for SPATIAL_KEY_2D
     // 133 was used for CUSTOM_DATA_TYPE
@@ -414,6 +416,16 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
             }
             break;
         }
+        case Value.EMOTICON: {
+            String s = v.getString();
+            int len = s.length();
+            if (len < 32) {
+                buff.put((byte) (EMOTICON_0_31 + len)).putStringData(s, len);
+            } else {
+                writeString(buff.put(EMOTICON), s);
+            }
+            break;
+        }
         case Value.VARCHAR_IGNORECASE:
             writeString(buff.put(VARCHAR_IGNORECASE), v.getString());
             break;
@@ -669,6 +681,8 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
             return ValueVarchar.get(readString(buff));
         case VARCHAR_IGNORECASE:
             return ValueVarcharIgnoreCase.get(readString(buff));
+        case EMOTICON:
+            return ValueEMOTICON.get(readString(buff));
         case CHAR:
             return ValueChar.get(readString(buff));
         case ENUM: {
