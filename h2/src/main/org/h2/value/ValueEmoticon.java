@@ -2,8 +2,6 @@ package org.h2.value;
 
 import org.h2.engine.CastDataProvider;
 
-import java.security.NoSuchAlgorithmException;
-
 public class ValueEmoticon extends Value {
 
     protected Emoticon emoticon;

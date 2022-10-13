@@ -1107,7 +1107,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
      * @param column the column (if any), used to improve the error message if conversion fails
      * @return the converted value
      */
-    private Value convertTo(TypeInfo targetType, CastDataProvider provider, int conversionMode, Object column) throws NoSuchAlgorithmException {
+    private Value convertTo(TypeInfo targetType, CastDataProvider provider, int conversionMode, Object column) {
         int valueType = getValueType(), targetValueType;
         if (valueType == NULL
                 || valueType == (targetValueType = targetType.getValueType()) && conversionMode == CONVERT_TO
@@ -1122,7 +1122,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         case VARCHAR:
             return convertToVarchar(targetType, provider, conversionMode, column);
         case EMOTICON:
-            return convertToEMOTICON(targetType, provider, conversionMode, column);
+            return convertToEMOTICON(targetType, conversionMode, column);
         case CLOB:
             return convertToClob(targetType, conversionMode, column);
         case VARCHAR_IGNORECASE:
@@ -1274,7 +1274,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         return valueType == Value.VARCHAR ? this : ValueVarchar.get(getString(), provider);
     }
 
-    private Value convertToEMOTICON(TypeInfo  targetType, CastDataProvider provider, int conversionMode, Object column) {
+    private Value convertToEMOTICON(TypeInfo  targetType, int conversionMode, Object column)  {
         int valueType = getValueType();
         switch (valueType) {
         case BLOB:
