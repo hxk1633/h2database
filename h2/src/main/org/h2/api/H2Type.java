@@ -31,7 +31,7 @@ public final class H2Type implements SQLType {
     /**
      * The EMOTICON data type.
      */
-    public static final H2Type EMOTICON = new H2Type(TypeInfo.getTypeInfo(Value.EMOTICON), "EMOTICON");
+    public static final H2Type EMOTICON = new H2Type(TypeInfo.getTypeInfo(Value.EMOTICON), "EMOTICON");  // EMOTICON data type code
 
     /**
      * The CHARACTER LARGE OBJECT data type.

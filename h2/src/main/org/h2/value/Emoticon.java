@@ -3,9 +3,17 @@ import org.h2.api.ErrorCode;
 import org.h2.message.DbException;
 import java.io.Serializable;
 
+/**
+ * Java class for instantiating Emoticon objects
+ */
 public class Emoticon implements Serializable {
     private String emoticon;
 
+    /***
+     * Constructor for creating an Emoticon object
+     * Throws an database exception if format of emoticon is incorrect
+     * @param emoticon
+     */
     public Emoticon(String emoticon) {
         if (emoticon.equals(":)") || emoticon.equals(":(")) {
             this.emoticon = emoticon;
@@ -30,7 +38,6 @@ public class Emoticon implements Serializable {
             return false;
         return true;
     }
-
 
     @Override
     public String toString(){

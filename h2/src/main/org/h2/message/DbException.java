@@ -572,7 +572,7 @@ public class DbException extends RuntimeException {
         case VIEW_NOT_FOUND_1:
         case VIEW_ALREADY_EXISTS_1:
         case TRIGGER_ALREADY_EXISTS_1:
-        case INVALID_EMOTICON_ERROR_CODE:
+        case INVALID_EMOTICON_ERROR_CODE:   // EMOTICON data type code
         case TRIGGER_NOT_FOUND_1:
         case ERROR_CREATING_TRIGGER_OBJECT_3:
         case CONSTRAINT_ALREADY_EXISTS_1:

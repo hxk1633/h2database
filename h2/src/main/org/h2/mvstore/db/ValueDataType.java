@@ -68,7 +68,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
     private static final byte ENUM = 25;
     private static final byte INTERVAL = 26;
     private static final byte ROW = 27;
-    private static final byte EMOTICON = 28;
+    private static final byte EMOTICON = 28;      // EMOTICON data type code
     private static final byte INT_0_15 = 32;
     private static final byte BIGINT_0_7 = 48;
     private static final byte NUMERIC_0_1 = 56;
@@ -81,7 +81,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
     private static final byte INT_NEG = 66;
     private static final byte BIGINT_NEG = 67;
     private static final byte VARCHAR_0_31 = 68;
-    private static final byte EMOTICON_0_31 = 69;
+    private static final byte EMOTICON_0_31 = 69;           // EMOTICON data type code
     private static final int VARBINARY_0_31 = 100;
     // 132 was used for SPATIAL_KEY_2D
     // 133 was used for CUSTOM_DATA_TYPE
@@ -382,7 +382,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
             }
             break;
         }
-        case Value.EMOTICON: {
+        case Value.EMOTICON: {          // EMOTICON datatype code
             writeString(buff.put(EMOTICON), v.getString());
             break;
         }
@@ -641,7 +641,7 @@ public final class ValueDataType extends BasicDataType<Value> implements Statefu
             return ValueVarchar.get(readString(buff));
         case VARCHAR_IGNORECASE:
             return ValueVarcharIgnoreCase.get(readString(buff));
-        case EMOTICON:
+        case EMOTICON:                                  // EMOTICON data type code
             return ValueEmoticon.get(new Emoticon(readString(buff)));
         case CHAR:
             return ValueChar.get(readString(buff));

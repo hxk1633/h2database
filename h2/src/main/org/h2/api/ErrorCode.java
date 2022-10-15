@@ -2254,6 +2254,10 @@ public class ErrorCode {
 
     // next is 90158
 
+    /**
+     * The error with code <code>90158</code> is thrown when the EMOTICON data type has
+     * an incorrect format
+     */
     public static final int INVALID_EMOTICON_ERROR_CODE = 90158;
 
     private ErrorCode() {

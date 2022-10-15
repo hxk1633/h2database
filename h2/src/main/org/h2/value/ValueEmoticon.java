@@ -2,6 +2,9 @@ package org.h2.value;
 
 import org.h2.engine.CastDataProvider;
 
+/**
+ * Emoticon data type class extending the base Value class
+ */
 public class ValueEmoticon extends Value {
 
     protected Emoticon emoticon;
@@ -15,6 +18,11 @@ public class ValueEmoticon extends Value {
         this.emoticon = emoticonValue;
     }
 
+    /**
+     * Creates an ValueEmoticon object
+     * @param emoticonObj
+     * @return Value object
+     */
     public static Value get(Emoticon emoticonObj)  {
         ValueEmoticon value = new ValueEmoticon(emoticonObj);
         return value;

@@ -1121,8 +1121,8 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return convertToChar(targetType, provider, conversionMode, column);
         case VARCHAR:
             return convertToVarchar(targetType, provider, conversionMode, column);
-        case EMOTICON:
-            return convertToEMOTICON(targetType, conversionMode, column);
+        case EMOTICON:                                                     // EMOTICON datatype code
+            return convertToEMOTICON(targetType, conversionMode, column);  // EMOTICON datatype code
         case CLOB:
             return convertToClob(targetType, conversionMode, column);
         case VARCHAR_IGNORECASE:
@@ -1274,7 +1274,8 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         return valueType == Value.VARCHAR ? this : ValueVarchar.get(getString(), provider);
     }
 
-    private Value convertToEMOTICON(TypeInfo  targetType, int conversionMode, Object column)  {
+    // EMOTICON data type code for conversions
+    private Value convertToEMOTICON(TypeInfo targetType, int conversionMode, Object column)  {
         int valueType = getValueType();
         switch (valueType) {
         case BLOB:
@@ -1448,7 +1449,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return (ValueBoolean) this;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:     // EMOTICON data type code
         case VARCHAR_IGNORECASE:
             return ValueBoolean.get(getBoolean());
         case TINYINT:
@@ -1482,7 +1483,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return (ValueTinyint) this;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:           // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case BOOLEAN:
             return ValueTinyint.get(getByte());
@@ -1540,7 +1541,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return (ValueSmallint) this;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:          // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case BOOLEAN:
         case TINYINT:
@@ -1598,7 +1599,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return (ValueInteger) this;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                  // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case BOOLEAN:
         case TINYINT:
@@ -1655,7 +1656,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return (ValueBigint) this;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                  // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case BOOLEAN:
         case TINYINT:
@@ -1786,7 +1787,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             break;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                      // EMOTICON data type code
         case VARCHAR_IGNORECASE: {
             String s = getString().trim();
             try {
@@ -1883,7 +1884,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
                             + provider.currentTimeZone().getTimeZoneOffsetUTC(epochSeconds)));
         }
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                  // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR:
             return ValueDate.parse(getString().trim());
@@ -1918,7 +1919,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             break;
         }
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                  // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR:
             v = ValueTime.parse(getString().trim());
@@ -1963,7 +1964,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             break;
         }
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                  // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR:
             v = ValueTimeTimeZone.parse(getString().trim());
@@ -2012,7 +2013,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             break;
         }
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                      // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR:
             v = ValueTimestamp.parse(getString().trim(), provider);
@@ -2080,7 +2081,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             break;
         }
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                          // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR:
             v = ValueTimestampTimeZone.parse(getString().trim(), provider);
@@ -2145,7 +2146,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             leading = convertToLong(getBigDecimal(), column);
             break;
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                      // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR: {
             String s = getString();
@@ -2208,7 +2209,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             leading = convertToLong(getBigDecimal(), column);
             break;
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                          // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR: {
             String s = getString();
@@ -2330,7 +2331,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         case DECFLOAT:
             return extTypeInfo.getValue(getInt(), provider);
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                                      // EMOTICON data type code
         case VARCHAR_IGNORECASE:
         case CHAR:
             return extTypeInfo.getValue(getString(), provider);
@@ -2377,7 +2378,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
         }
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                          // EMOTICON data type code
         case CLOB:
         case VARCHAR_IGNORECASE:
             result = ValueGeometry.get(getString());
@@ -2431,7 +2432,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             break;
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                          // EMOTICON data type code
         case CLOB:
         case VARCHAR_IGNORECASE:
         case DATE:
@@ -2487,7 +2488,7 @@ public abstract class Value extends VersionedValue<Value> implements HasSQL, Typ
             return JdbcUtils.deserializeUuid(getBytesNoCopy());
         case CHAR:
         case VARCHAR:
-        case EMOTICON:
+        case EMOTICON:                          // EMOTICON data type code
         case VARCHAR_IGNORECASE:
             return ValueUuid.get(getString());
         default:

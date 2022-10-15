@@ -136,8 +136,7 @@ public class DataType {
                 "BINARY LARGE OBJECT", "BLOB", "TINYBLOB", "MEDIUMBLOB", "LONGBLOB", "IMAGE");
         add(Value.BOOLEAN, Types.BOOLEAN, createNumeric(ValueBoolean.PRECISION, 0), "BOOLEAN", "BIT", "BOOL");
         add(Value.TINYINT, Types.TINYINT, createNumeric(ValueTinyint.PRECISION, 0), "TINYINT");
-        //add(Value.BIT_NUM, Types.BIT_NUM, createNumeric(ValueBIT_NUM.PRECISION, 0), "BIT_NUM");
-        add(Value.EMOTICON, 9000, createString(false, false), "EMOTICON");
+        add(Value.EMOTICON, 9000, createString(false, false), "EMOTICON");    // EMOTICON datatype code
         add(Value.SMALLINT, Types.SMALLINT, createNumeric(ValueSmallint.PRECISION, 0), "SMALLINT", "INT2");
         add(Value.INTEGER, Types.INTEGER, createNumeric(ValueInteger.PRECISION, 0),
                 "INTEGER", "INT", "MEDIUMINT", "INT4", "SIGNED"
@@ -509,7 +508,7 @@ public class DataType {
         case Types.ARRAY:
             return Value.ARRAY;
         case 9000:
-               return Value.EMOTICON;
+               return Value.EMOTICON;   // EMOTICON datatype code
         default:
             throw DbException.get(
                     ErrorCode.UNKNOWN_DATA_TYPE_1, Integer.toString(sqlType));
@@ -721,7 +720,7 @@ public class DataType {
      * @return true if the value type is a String type
      */
     public static boolean isStringType(int type) {
-        return type == Value.VARCHAR || type == Value.CHAR || type == Value.VARCHAR_IGNORECASE || type == Value.EMOTICON;
+        return type == Value.VARCHAR || type == Value.CHAR || type == Value.VARCHAR_IGNORECASE || type == Value.EMOTICON;  // EMOTICON datatype code
     }
 
     /**
