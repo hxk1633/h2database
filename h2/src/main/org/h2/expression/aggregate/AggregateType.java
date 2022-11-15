@@ -20,6 +20,8 @@ public enum AggregateType {
      */
     COUNT,
 
+    COUNT2,
+
     /**
      * The aggregate type for SUM(expression).
      */

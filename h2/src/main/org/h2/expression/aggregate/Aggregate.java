@@ -110,6 +110,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
          * Update initial size of AGGREGATES after editing the following list.
          */
         addAggregate("COUNT", AggregateType.COUNT);
+        addAggregate("COUNT2", AggregateType.COUNT2);
         addAggregate("SUM", AggregateType.SUM);
         addAggregate("MIN", AggregateType.MIN);
         addAggregate("MAX", AggregateType.MAX);
