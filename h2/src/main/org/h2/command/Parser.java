@@ -3469,6 +3469,20 @@ public class Parser {
                 }
             }
             break;
+        case COUNT2:
+        if (readIf(ASTERISK)) {
+            r = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], currentSelect, false);
+        } else {
+            boolean distinct = readDistinctAgg();
+            Expression on = readExpression();
+            if (on instanceof Wildcard && !distinct) {
+                // PostgreSQL compatibility: count(t.*)
+                r = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], currentSelect, false);
+            } else {
+                r = new Aggregate(AggregateType.COUNT, new Expression[] { on }, currentSelect, distinct);
+            }
+        }
+        break;
         case COVAR_POP:
         case COVAR_SAMP:
         case CORR:

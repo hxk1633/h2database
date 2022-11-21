@@ -421,6 +421,11 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return new AggregateDataCount(false);
             }
             break;
+        case COUNT2:
+        if (!distinct) {
+            return new AggregateDataCount2(false);
+        }
+        break;
         case RANK:
         case DENSE_RANK:
         case PERCENT_RANK:
@@ -503,6 +508,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
     private Value getValueQuick(SessionLocal session) {
         switch (aggregateType) {
         case COUNT:
+        case COUNT2:        
         case COUNT_ALL:
             Table table = select.getTopTableFilter().getTable();
             return ValueBigint.get(table.getRowCount(session));
@@ -560,6 +566,11 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return ValueBigint.get(((AggregateDataCollecting) data).getCount());
             }
             break;
+        case COUNT2:
+        if (distinct) {
+            return ValueBigint.get(((AggregateDataCollecting) data).getCount());
+        }
+        break;
         case SUM:
         case BIT_XOR_AGG:
         case BIT_XNOR_AGG:
@@ -964,6 +975,19 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 }
             }
             //$FALL-THROUGH$
+        case COUNT2:
+        if (args[0].isConstant()) {
+            if (args[0].getValue(session) == ValueNull.INSTANCE) {
+                return ValueExpression.get(ValueBigint.get(0L));
+            }
+            if (!distinct) {
+                Aggregate aggregate = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], select, false);
+                aggregate.setFilterCondition(filterCondition);
+                aggregate.setOverCondition(over);
+                return aggregate.optimize(session);
+            }
+        }
+        //$FALL-THROUGH$
         case COUNT_ALL:
         case REGR_COUNT:
             type = TypeInfo.TYPE_BIGINT;
@@ -1275,6 +1299,11 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                     return false;
                 }
                 //$FALL-THROUGH$
+            case COUNT2:
+            if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
+                return false;
+            }
+            //$FALL-THROUGH$
             case COUNT_ALL:
                 return visitor.getTable().canGetRowCount(select.getSession());
             case MIN:
