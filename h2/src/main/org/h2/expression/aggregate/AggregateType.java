@@ -22,6 +22,8 @@ public enum AggregateType {
 
     COUNT2,
 
+    COUNT_EVEN,
+
     /**
      * The aggregate type for SUM(expression).
      */

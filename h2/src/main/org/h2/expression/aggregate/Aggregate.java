@@ -111,6 +111,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
          */
         addAggregate("COUNT", AggregateType.COUNT);
         addAggregate("COUNT2", AggregateType.COUNT2);
+        addAggregate("COUNT_EVEN", AggregateType.COUNT_EVEN);
         addAggregate("SUM", AggregateType.SUM);
         addAggregate("MIN", AggregateType.MIN);
         addAggregate("MAX", AggregateType.MAX);
@@ -422,10 +423,15 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
             }
             break;
         case COUNT2:
-        if (!distinct) {
-            return new AggregateDataCount2(false);
-        }
-        break;
+            if (!distinct) {
+                return new AggregateDataCount2(false);
+            }
+            break;
+        case COUNT_EVEN:
+            if (!distinct) {
+                return new AggregateDataCountEven(false);
+            }
+            break;
         case RANK:
         case DENSE_RANK:
         case PERCENT_RANK:
@@ -508,6 +514,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
     private Value getValueQuick(SessionLocal session) {
         switch (aggregateType) {
         case COUNT:
+        case COUNT_EVEN:
         case COUNT2:        
         case COUNT_ALL:
             Table table = select.getTopTableFilter().getTable();
@@ -568,10 +575,15 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
             }
             break;
         case COUNT2:
-        if (distinct) {
-            return ValueBigint.get(((AggregateDataCollecting) data).getCount());
-        }
-        break;
+            if (distinct) {
+                return ValueBigint.get(((AggregateDataCollecting) data).getCount());
+            }
+            break;
+        case COUNT_EVEN:
+            if (distinct) {
+                return ValueBigint.get(((AggregateDataCollecting) data).getCount());
+            }
+            break;
         case SUM:
         case BIT_XOR_AGG:
         case BIT_XNOR_AGG:
@@ -988,6 +1000,18 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return aggregate.optimize(session);
             }
         }
+        case COUNT_EVEN:
+            if (args[0].isConstant()) {
+                if (args[0].getValue(session) == ValueNull.INSTANCE) {
+                    return ValueExpression.get(ValueBigint.get(0L));
+                }
+                if (!distinct) {
+                    Aggregate aggregate = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], select, false);
+                    aggregate.setFilterCondition(filterCondition);
+                    aggregate.setOverCondition(over);
+                    return aggregate.optimize(session);
+                }
+            }
         //$FALL-THROUGH$
         case COUNT_ALL:
         case REGR_COUNT:
@@ -1303,6 +1327,10 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
             case COUNT2:
             if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                 return false;
+            }
+            case COUNT_EVEN:
+                if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
+                    return false;
             }
             //$FALL-THROUGH$
             case COUNT_ALL:
