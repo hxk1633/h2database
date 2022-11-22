@@ -511,7 +511,8 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
         case COUNT2:        
         case COUNT_ALL:
             Table table = select.getTopTableFilter().getTable();
-            return ValueBigint.get(table.getRowCount(session));
+            return ValueBigint.get(table.getRowCount(session)*2);
+
         case MIN:
         case MAX: {
             boolean first = aggregateType == AggregateType.MIN;

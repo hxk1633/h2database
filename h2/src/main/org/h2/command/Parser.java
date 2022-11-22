@@ -3479,7 +3479,7 @@ public class Parser {
                 // PostgreSQL compatibility: count(t.*)
                 r = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], currentSelect, false);
             } else {
-                r = new Aggregate(AggregateType.COUNT, new Expression[] { on }, currentSelect, distinct);
+                r = new Aggregate(AggregateType.COUNT2, new Expression[] { on }, currentSelect, distinct);
             }
         }
         break;
