@@ -573,6 +573,7 @@ public class DbException extends RuntimeException {
         case VIEW_ALREADY_EXISTS_1:
         case TRIGGER_ALREADY_EXISTS_1:
         case TRIGGER_NOT_FOUND_1:
+        case INVALID_COUNT_EVEN_TYPE_ERROR_CODE:   // COUNT_EVEN aggregate error code
         case ERROR_CREATING_TRIGGER_OBJECT_3:
         case CONSTRAINT_ALREADY_EXISTS_1:
         case SUBQUERY_IS_NOT_SINGLE_COLUMN:
