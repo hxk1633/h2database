@@ -112,6 +112,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
         addAggregate("COUNT", AggregateType.COUNT);
         addAggregate("COUNT2", AggregateType.COUNT2);
         addAggregate("COUNT_EVEN", AggregateType.COUNT_EVEN);
+        addAggregate("COUNT_ODD", AggregateType.COUNT_ODD);
         addAggregate("SUM", AggregateType.SUM);
         addAggregate("MIN", AggregateType.MIN);
         addAggregate("MAX", AggregateType.MAX);
@@ -432,6 +433,11 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return new AggregateDataCountEven(false);
             }
             break;
+        case COUNT_ODD:
+            if (!distinct) {
+                return new AggregateDataCountOdd(false);
+            }
+            break;
         case RANK:
         case DENSE_RANK:
         case PERCENT_RANK:
@@ -515,6 +521,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
         switch (aggregateType) {
         case COUNT:
         case COUNT_EVEN:
+        case COUNT_ODD:
         case COUNT2:        
         case COUNT_ALL:
             Table table = select.getTopTableFilter().getTable();
@@ -1012,6 +1019,18 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                     return aggregate.optimize(session);
                 }
             }
+        case COUNT_ODD:
+            if (args[0].isConstant()) {
+                if (args[0].getValue(session) == ValueNull.INSTANCE) {
+                    return ValueExpression.get(ValueBigint.get(0L));
+                }
+                if (!distinct) {
+                    Aggregate aggregate = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], select, false);
+                    aggregate.setFilterCondition(filterCondition);
+                    aggregate.setOverCondition(over);
+                    return aggregate.optimize(session);
+                }
+            }
         //$FALL-THROUGH$
         case COUNT_ALL:
         case REGR_COUNT:
@@ -1329,6 +1348,10 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return false;
             }
             case COUNT_EVEN:
+                if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
+                    return false;
+            }
+            case COUNT_ODD:
                 if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                     return false;
             }
