@@ -5,10 +5,15 @@
  */
 package org.h2.expression.aggregate;
 
+import org.h2.api.ErrorCode;
 import org.h2.engine.SessionLocal;
+import org.h2.message.DbException;
 import org.h2.value.Value;
 import org.h2.value.ValueBigint;
 import org.h2.value.ValueNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Data stored while calculating a COUNT aggregate.
@@ -18,6 +23,7 @@ final class AggregateDataCountOdd extends AggregateData {
     private final boolean all;
     private boolean odd;
     private long count;
+    private ArrayList<Integer> allowedTypes = new ArrayList<>(Arrays.asList(9, 11, 12, 13, 14, 15, 16));
 
     AggregateDataCountOdd(boolean all) {
         this.all = all;
@@ -25,10 +31,13 @@ final class AggregateDataCountOdd extends AggregateData {
 
     @Override
     void add(SessionLocal session, Value v) {
-        System.out.println(v.getFloat());
-        odd = v.getFloat() % 2 != 0;
-        if (all || (v != ValueNull.INSTANCE && odd)) {
-            count = count + 1;
+        if (allowedTypes.contains(v.getValueType())) {
+            odd = v.getFloat() % 2 != 0;
+            if (all || (v != ValueNull.INSTANCE && odd)) {
+                count = count + 1;
+            }
+        } else {
+            throw DbException.get(ErrorCode.INVALID_AGGREGATE_DATA_TYPE_ERROR_CODE);
         }
     }
 

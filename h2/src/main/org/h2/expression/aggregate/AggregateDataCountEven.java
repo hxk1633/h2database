@@ -30,16 +30,13 @@ final class AggregateDataCountEven extends AggregateData {
 
     @Override
     void add(SessionLocal session, Value v) {
-//        System.out.println(v.getFloat());
-        System.out.println(v.getType());
-        System.out.println(v.getValueType());
         if (allowedTypes.contains(v.getValueType())) {
             even = v.getFloat() % 2 == 0;
             if (all || (v != ValueNull.INSTANCE && even)) {
                 count = count + 1;
             }
         } else {
-            throw DbException.get(ErrorCode.INVALID_COUNT_EVEN_TYPE_ERROR_CODE);
+            throw DbException.get(ErrorCode.INVALID_AGGREGATE_DATA_TYPE_ERROR_CODE);
         }
     }
 

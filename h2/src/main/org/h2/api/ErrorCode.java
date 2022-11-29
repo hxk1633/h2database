@@ -2255,7 +2255,7 @@ public class ErrorCode {
     /**
      * The error with code <code>90159</code> is thrown when the COUNT_EVEN aggregate is passed in an inccorect data type
      */
-    public static final int INVALID_COUNT_EVEN_TYPE_ERROR_CODE = 90159;
+    public static final int INVALID_AGGREGATE_DATA_TYPE_ERROR_CODE = 90159;
 
     // next is 90158
 
