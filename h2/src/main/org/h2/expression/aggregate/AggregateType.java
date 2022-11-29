@@ -26,6 +26,8 @@ public enum AggregateType {
 
     COUNT_ODD,
 
+    COUNT_TEXT,
+
     /**
      * The aggregate type for SUM(expression).
      */

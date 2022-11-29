@@ -111,6 +111,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
          */
         addAggregate("COUNT", AggregateType.COUNT);
         addAggregate("COUNT2", AggregateType.COUNT2);
+        addAggregate("COUNT_TEXT", AggregateType.COUNT_TEXT);
         addAggregate("COUNT_EVEN", AggregateType.COUNT_EVEN);
         addAggregate("COUNT_ODD", AggregateType.COUNT_ODD);
         addAggregate("SUM", AggregateType.SUM);
@@ -433,6 +434,11 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return new AggregateDataCountEven(false);
             }
             break;
+        case COUNT_TEXT:
+            if (!distinct) {
+                return new AggregateDataCountText(false);
+            }
+            break;
         case COUNT_ODD:
             if (!distinct) {
                 return new AggregateDataCountOdd(false);
@@ -521,11 +527,12 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
         switch (aggregateType) {
         case COUNT:
         case COUNT_EVEN:
+        case COUNT_TEXT:
         case COUNT_ODD:
         case COUNT2:        
         case COUNT_ALL:
             Table table = select.getTopTableFilter().getTable();
-            return ValueBigint.get(table.getRowCount(session)*2);
+            return ValueBigint.get(table.getRowCount(session));
 
         case MIN:
         case MAX: {
@@ -587,6 +594,11 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
             }
             break;
         case COUNT_EVEN:
+            if (distinct) {
+                return ValueBigint.get(((AggregateDataCollecting) data).getCount());
+            }
+            break;
+        case COUNT_TEXT:
             if (distinct) {
                 return ValueBigint.get(((AggregateDataCollecting) data).getCount());
             }
@@ -1007,6 +1019,18 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return aggregate.optimize(session);
             }
         }
+        case COUNT_TEXT:
+            if (args[0].isConstant()) {
+                if (args[0].getValue(session) == ValueNull.INSTANCE) {
+                    return ValueExpression.get(ValueBigint.get(0L));
+                }
+                if (!distinct) {
+                    Aggregate aggregate = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], select, false);
+                    aggregate.setFilterCondition(filterCondition);
+                    aggregate.setOverCondition(over);
+                    return aggregate.optimize(session);
+                }
+            }
         case COUNT_EVEN:
             if (args[0].isConstant()) {
                 if (args[0].getValue(session) == ValueNull.INSTANCE) {
@@ -1344,6 +1368,10 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 }
                 //$FALL-THROUGH$
             case COUNT2:
+            if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
+                return false;
+            }
+            case COUNT_TEXT:
             if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                 return false;
             }
