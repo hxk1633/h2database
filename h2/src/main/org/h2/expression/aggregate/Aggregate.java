@@ -111,9 +111,9 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
          */
         addAggregate("COUNT", AggregateType.COUNT);
         addAggregate("COUNT2", AggregateType.COUNT2);
-        addAggregate("COUNT_TEXT", AggregateType.COUNT_TEXT);
-        addAggregate("COUNT_EVEN", AggregateType.COUNT_EVEN);
-        addAggregate("COUNT_ODD", AggregateType.COUNT_ODD);
+        addAggregate("COUNT_TEXT", AggregateType.COUNT_TEXT);   // COUNT_TEXT aggregate query code
+        addAggregate("COUNT_EVEN", AggregateType.COUNT_EVEN);   // COUNT_EVEN aggregate query code
+        addAggregate("COUNT_ODD", AggregateType.COUNT_ODD);     // COUNT_ODD aggregate query code
         addAggregate("SUM", AggregateType.SUM);
         addAggregate("MIN", AggregateType.MIN);
         addAggregate("MAX", AggregateType.MAX);
@@ -429,17 +429,17 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return new AggregateDataCount2(false);
             }
             break;
-        case COUNT_EVEN:
+        case COUNT_EVEN:        // COUNT_EVEN aggregate query code
             if (!distinct) {
                 return new AggregateDataCountEven(false);
             }
             break;
-        case COUNT_TEXT:
+        case COUNT_TEXT:        // COUNT_TEXT aggregate query code
             if (!distinct) {
                 return new AggregateDataCountText(false);
             }
             break;
-        case COUNT_ODD:
+        case COUNT_ODD:         // COUNT_ODD aggregate query code
             if (!distinct) {
                 return new AggregateDataCountOdd(false);
             }
@@ -526,9 +526,9 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
     private Value getValueQuick(SessionLocal session) {
         switch (aggregateType) {
         case COUNT:
-        case COUNT_EVEN:
-        case COUNT_TEXT:
-        case COUNT_ODD:
+        case COUNT_EVEN:    // COUNT_EVEN aggregate query code
+        case COUNT_TEXT:    // COUNT_TEXT aggregate query code
+        case COUNT_ODD:     // COUNT_ODD aggregate query code
         case COUNT2:        
         case COUNT_ALL:
             Table table = select.getTopTableFilter().getTable();
@@ -593,12 +593,17 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return ValueBigint.get(((AggregateDataCollecting) data).getCount());
             }
             break;
-        case COUNT_EVEN:
+        case COUNT_EVEN:        // COUNT_EVEN aggregate query code
             if (distinct) {
                 return ValueBigint.get(((AggregateDataCollecting) data).getCount());
             }
             break;
-        case COUNT_TEXT:
+        case COUNT_ODD:        // COUNT_ODD aggregate query code
+            if (distinct) {
+                return ValueBigint.get(((AggregateDataCollecting) data).getCount());
+            }
+            break;
+        case COUNT_TEXT:        // COUNT_TEXT aggregate query code
             if (distinct) {
                 return ValueBigint.get(((AggregateDataCollecting) data).getCount());
             }
@@ -1019,7 +1024,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                 return aggregate.optimize(session);
             }
         }
-        case COUNT_TEXT:
+        case COUNT_TEXT:        // COUNT_TEXT aggregate query code
             if (args[0].isConstant()) {
                 if (args[0].getValue(session) == ValueNull.INSTANCE) {
                     return ValueExpression.get(ValueBigint.get(0L));
@@ -1031,7 +1036,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                     return aggregate.optimize(session);
                 }
             }
-        case COUNT_EVEN:
+        case COUNT_EVEN:        // COUNT_EVEN aggregate query code
             if (args[0].isConstant()) {
                 if (args[0].getValue(session) == ValueNull.INSTANCE) {
                     return ValueExpression.get(ValueBigint.get(0L));
@@ -1043,7 +1048,7 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
                     return aggregate.optimize(session);
                 }
             }
-        case COUNT_ODD:
+        case COUNT_ODD:         // COUNT_ODD aggregate query code
             if (args[0].isConstant()) {
                 if (args[0].getValue(session) == ValueNull.INSTANCE) {
                     return ValueExpression.get(ValueBigint.get(0L));
@@ -1371,15 +1376,15 @@ public class Aggregate extends AbstractAggregate implements ExpressionWithFlags 
             if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                 return false;
             }
-            case COUNT_TEXT:
+            case COUNT_TEXT:    // COUNT_TEXT aggregate query code
             if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                 return false;
             }
-            case COUNT_EVEN:
+            case COUNT_EVEN:    // COUNT_EVEN aggregate query code
                 if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                     return false;
             }
-            case COUNT_ODD:
+            case COUNT_ODD:     // COUNT_ODD aggregate query code
                 if (distinct || args[0].getNullable() != Column.NOT_NULLABLE) {
                     return false;
             }

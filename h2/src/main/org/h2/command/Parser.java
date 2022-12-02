@@ -3483,7 +3483,7 @@ public class Parser {
                 }
             }
             break;
-        case COUNT_TEXT:
+        case COUNT_TEXT:        // COUNT_TEXT aggregate query code
             if (readIf(ASTERISK)) {
                 r = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], currentSelect, false);
             } else {
@@ -3497,7 +3497,7 @@ public class Parser {
                 }
             }
             break;
-        case COUNT_EVEN:
+        case COUNT_EVEN:        // COUNT_EVEN aggregate query code
             if (readIf(ASTERISK)) {
                 r = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], currentSelect, false);
             } else {
@@ -3511,7 +3511,7 @@ public class Parser {
                 }
             }
             break;
-        case COUNT_ODD:
+        case COUNT_ODD:         // COUNT_ODD aggregate query code
             if (readIf(ASTERISK)) {
                 r = new Aggregate(AggregateType.COUNT_ALL, new Expression[0], currentSelect, false);
             } else {

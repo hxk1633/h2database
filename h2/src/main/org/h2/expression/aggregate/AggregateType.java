@@ -20,12 +20,24 @@ public enum AggregateType {
      */
     COUNT,
 
+    /**
+     * The aggregate type for COUNT2(expression).
+     */
     COUNT2,
 
+    /**
+     * The aggregate type for COUNT_EVEN(expression).
+     */
     COUNT_EVEN,
 
+    /**
+     * The aggregate type for COUNT_ODD(expression).
+     */
     COUNT_ODD,
 
+    /**
+     * The aggregate type for COUNT_TEXT(expression).
+     */
     COUNT_TEXT,
 
     /**

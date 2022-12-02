@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Data stored while calculating a COUNT aggregate.
+ * Data stored while calculating a COUNT_EVEN aggregate.
  */
 final class AggregateDataCountEven extends AggregateData {
 

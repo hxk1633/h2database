@@ -11,7 +11,7 @@ import org.h2.value.ValueBigint;
 import org.h2.value.ValueNull;
 
 /**
- * Data stored while calculating a COUNT aggregate.
+ * Data stored while calculating a COUNT_TEXT aggregate.
  */
 final class AggregateDataCountText extends AggregateData {
 
